@@ -505,6 +505,7 @@ RUN set -xe && \
 ENV CLOJURE_VERSION 1.10.1
 RUN set -xe && \
     apt-get update && \
+    apt-get install -y ca-certificates-java && \
     apt-get install -y --no-install-recommends maven && \
     cd /tmp && \
     git clone https://github.com/clojure/clojure && \
