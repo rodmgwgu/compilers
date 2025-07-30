@@ -361,7 +361,7 @@ ENV GPROLOG_VERSIONS \
       1.4.5
 RUN set -xe && \
     for VERSION in $GPROLOG_VERSIONS; do \
-      curl -fSsL "http://gprolog.org/gprolog-$VERSION.tar.gz" -o /tmp/gprolog-$VERSION.tar.gz && \
+      curl -fSsL "http://gprolog.org/old_versions/gprolog-$VERSION.tar.gz" -o /tmp/gprolog-$VERSION.tar.gz && \
       mkdir /tmp/gprolog-$VERSION && \
       tar -xf /tmp/gprolog-$VERSION.tar.gz -C /tmp/gprolog-$VERSION --strip-components=1 && \
       rm /tmp/gprolog-$VERSION.tar.gz && \
