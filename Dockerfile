@@ -1,6 +1,9 @@
 # Check for latest version here: https://hub.docker.com/_/buildpack-deps?tab=tags&page=1&name=buster&ordering=last_updated
 # This is just a snapshot of buildpack-deps:buster that was last updated on 2019-12-28.
-FROM judge0/buildpack-deps:buster-2019-12-28
+FROM buildpack-deps:buster
+
+# Enable archive.debian.org as the source for apt-get since buster is no longer supported.
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list
 
 # Check for latest version here: https://gcc.gnu.org/releases.html, https://ftpmirror.gnu.org/gcc
 ENV GCC_VERSIONS \
@@ -120,7 +123,7 @@ ENV FPC_VERSIONS \
       3.0.4
 RUN set -xe && \
     for VERSION in $FPC_VERSIONS; do \
-      curl -fSsL "ftp://ftp.freepascal.org/fpc/dist/$VERSION/x86_64-linux/fpc-$VERSION.x86_64-linux.tar" -o /tmp/fpc-$VERSION.tar && \
+      curl -L "https://sourceforge.net/projects/freepascal/files/Linux/$VERSION/fpc-$VERSION.x86_64-linux.tar/download" -o /tmp/fpc-$VERSION.tar && \
       mkdir /tmp/fpc-$VERSION && \
       tar -xf /tmp/fpc-$VERSION.tar -C /tmp/fpc-$VERSION --strip-components=1 && \
       rm /tmp/fpc-$VERSION.tar && \
