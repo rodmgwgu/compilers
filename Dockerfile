@@ -526,7 +526,7 @@ RUN set -xe && \
 
 # Check for latest version here: https://groovy.apache.org/download.html
 RUN set -xe && \
-    curl -fSsL "https://dl.bintray.com/groovy/maven/apache-groovy-binary-3.0.3.zip" -o /tmp/groovy.zip && \
+    curl -fSsL "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-binary-3.0.25.zip" -o /tmp/groovy.zip && \
     unzip /tmp/groovy.zip -d /usr/local && \
     rm -rf /tmp/*
 
