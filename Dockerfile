@@ -252,10 +252,10 @@ RUN set -xe && \
 
 # Check for latest version here: https://sourceforge.net/projects/fbc/files/Binaries%20-%20Linux
 ENV FBC_VERSIONS \
-      1.07.1
+      1.07.3
 RUN set -xe && \
     for VERSION in $FBC_VERSIONS; do \
-      curl -fSsL "https://downloads.sourceforge.net/project/fbc/Binaries%20-%20Linux/FreeBASIC-$VERSION-linux-x86_64.tar.gz" -o /tmp/fbc-$VERSION.tar.gz && \
+      curl -fSsL "https://sourceforge.net/projects/fbc/files/FreeBASIC-$VERSION/Binaries-Linux/FreeBASIC-$VERSION-linux-x86_64.tar.gz/download" -o /tmp/fbc-$VERSION.tar.gz && \
       mkdir /usr/local/fbc-$VERSION && \
       tar -xf /tmp/fbc-$VERSION.tar.gz -C /usr/local/fbc-$VERSION --strip-components=1 && \
       rm -rf /tmp/*; \
