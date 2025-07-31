@@ -100,6 +100,18 @@ RUN set -xe && \
       rm -rf /tmp/*; \
     done
 
+# Check for latest version here: https://github.com/microsoft/TypeScript/releases
+ENV TYPESCRIPT_VERSIONS \
+      3.7.4
+RUN set -xe && \
+    curl -fSsL "https://deb.nodesource.com/setup_12.x" | bash - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/* && \
+    for VERSION in $TYPESCRIPT_VERSIONS; do \
+      npm install -g typescript@$VERSION; \
+    done
+
 
 # Check for latest version here: https://packages.debian.org/buster/clang-7
 # Used for additional compilers for C, C++ and used for Objective-C.
