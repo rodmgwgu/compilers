@@ -1,15 +1,9 @@
-# Check for latest version here: https://hub.docker.com/_/buildpack-deps?tab=tags&page=1&name=buster&ordering=last_updated
-# This is just a snapshot of buildpack-deps:buster that was last updated on 2019-12-28.
-FROM buildpack-deps:buster
-
-# Enable archive.debian.org as the source for apt-get since buster is no longer supported.
-RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list
+# Check for latest version here: https://hub.docker.com/_/buildpack-deps
+FROM buildpack-deps:bookworm
 
 # Check for latest version here: https://gcc.gnu.org/releases.html, https://ftpmirror.gnu.org/gcc
 ENV GCC_VERSIONS \
-      7.4.0 \
-      8.3.0 \
-      9.2.0
+      12.5
 RUN set -xe && \
     for VERSION in $GCC_VERSIONS; do \
       curl -fSsL "https://ftpmirror.gnu.org/gcc/gcc-$VERSION/gcc-$VERSION.tar.gz" -o /tmp/gcc-$VERSION.tar.gz && \
@@ -37,7 +31,7 @@ RUN set -xe && \
 
 # Check for latest version here: https://www.ruby-lang.org/en/downloads
 ENV RUBY_VERSIONS \
-      2.7.0
+      3.4.5
 RUN set -xe && \
     for VERSION in $RUBY_VERSIONS; do \
       curl -fSsL "https://cache.ruby-lang.org/pub/ruby/${VERSION%.*}/ruby-$VERSION.tar.gz" -o /tmp/ruby-$VERSION.tar.gz && \
@@ -55,8 +49,7 @@ RUN set -xe && \
 
 # Check for latest version here: https://www.python.org/downloads
 ENV PYTHON_VERSIONS \
-      3.8.1 \
-      2.7.17
+      3.13.5
 RUN set -xe && \
     for VERSION in $PYTHON_VERSIONS; do \
       curl -fSsL "https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz" -o /tmp/python-$VERSION.tar.xz && \
@@ -74,18 +67,18 @@ RUN set -xe && \
 
 # Check for latest version here: https://jdk.java.net
 RUN set -xe && \
-    curl -fSsL "https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz" -o /tmp/openjdk13.tar.gz && \
-    mkdir /usr/local/openjdk13 && \
-    tar -xf /tmp/openjdk13.tar.gz -C /usr/local/openjdk13 --strip-components=1 && \
-    rm /tmp/openjdk13.tar.gz && \
-    ln -s /usr/local/openjdk13/bin/javac /usr/local/bin/javac && \
-    ln -s /usr/local/openjdk13/bin/java /usr/local/bin/java && \
-    ln -s /usr/local/openjdk13/bin/jar /usr/local/bin/jar
+    curl -fSsL "https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-x64_bin.tar.gz" -o /tmp/openjdk24.tar.gz && \
+    mkdir /usr/local/openjdk24 && \
+    tar -xf /tmp/openjdk24.tar.gz -C /usr/local/openjdk24 --strip-components=1 && \
+    rm /tmp/openjdk24.tar.gz && \
+    ln -s /usr/local/openjdk24/bin/javac /usr/local/bin/javac && \
+    ln -s /usr/local/openjdk24/bin/java /usr/local/bin/java && \
+    ln -s /usr/local/openjdk24/bin/jar /usr/local/bin/jar
 
 
 # Check for latest version here: https://nodejs.org/en
 ENV NODE_VERSIONS \
-      12.14.0
+      22.18.0
 RUN set -xe && \
     for VERSION in $NODE_VERSIONS; do \
       curl -fSsL "https://nodejs.org/dist/v$VERSION/node-v$VERSION.tar.gz" -o /tmp/node-$VERSION.tar.gz && \
@@ -102,9 +95,9 @@ RUN set -xe && \
 
 # Check for latest version here: https://github.com/microsoft/TypeScript/releases
 ENV TYPESCRIPT_VERSIONS \
-      3.7.4
+      5.9.2
 RUN set -xe && \
-    curl -fSsL "https://deb.nodesource.com/setup_12.x" | bash - && \
+    curl -fSsL "https://deb.nodesource.com/setup_22.x" | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists/* && \
@@ -113,11 +106,11 @@ RUN set -xe && \
     done
 
 
-# Check for latest version here: https://packages.debian.org/buster/clang-7
+# Check for latest version here: https://packages.debian.org/bookworm/clang
 # Used for additional compilers for C, C++ and used for Objective-C.
 RUN set -xe && \
     apt-get update && \
-    apt-get install -y --no-install-recommends clang-7 gnustep-devel && \
+    apt-get install -y --no-install-recommends clang gnustep-devel && \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -xe && \
@@ -140,4 +133,4 @@ RUN set -xe && \
 ENV BOX_ROOT /var/local/lib/isolate
 
 LABEL maintainer="Herman Zvonimir Došilović <hermanz.dosilovic@gmail.com>"
-LABEL version="1.4.1"
+LABEL version="1.7.0"
