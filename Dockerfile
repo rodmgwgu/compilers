@@ -3,7 +3,7 @@ FROM buildpack-deps:bookworm
 
 # Check for latest version here: https://gcc.gnu.org/releases.html, https://ftpmirror.gnu.org/gcc
 ENV GCC_VERSIONS \
-      12.5
+      12.5.0
 RUN set -xe && \
     for VERSION in $GCC_VERSIONS; do \
       curl -fSsL "https://ftpmirror.gnu.org/gcc/gcc-$VERSION/gcc-$VERSION.tar.gz" -o /tmp/gcc-$VERSION.tar.gz && \
